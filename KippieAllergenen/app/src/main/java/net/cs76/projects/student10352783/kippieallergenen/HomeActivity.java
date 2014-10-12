@@ -22,6 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
+
+import java.util.ArrayList;
 
 
 public class HomeActivity extends Activity
@@ -35,6 +40,7 @@ public class HomeActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    Queries queries;
 
 
 
@@ -42,6 +48,10 @@ public class HomeActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        Parse.initialize(this, "uBVqiimzahlF9p5DZZIQqB4Xd6gZUapSG0rRbgNv", "15fS3MKOedQnwG2h98WqWsCpnk1DZAiiEs5VscES");
+
+        queries = Queries.getInstance();
+        queries.setProductNames();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -129,6 +139,8 @@ public class HomeActivity extends Activity
         EditText search;
         ArrayAdapter<String> adapter;
         Allergenen allergenenView;
+        SpecialOffers specialOffers;
+        Queries queries;
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -149,17 +161,29 @@ public class HomeActivity extends Activity
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
+
+            queries = Queries.getInstance();
+            ArrayList<String> productNames = queries.getProductNames();
+
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 2:
-                    rootView = inflater.inflate(R.layout.fragment_allergenen, container, false);
-                     /* Views for the Allergenen fragment*/
+
                     allergenenView = new Allergenen();
-                    allergenenView.setView(rootView, getActivity());
+
+
+
+
+                    rootView = inflater.inflate(R.layout.fragment_allergenen, container, false);
+                    allergenenView.setView(rootView, getActivity(), inflater, productNames);
                     break;
                 case 3:
-                    rootView = inflater.inflate(R.layout.fragment_home, container, false);
+                    specialOffers = new SpecialOffers();
+
+
+                    rootView = inflater.inflate(R.layout.fragment_aanbiedingen, container, false);
+                    specialOffers.setView(rootView, getActivity(), inflater);
                     break;
                 case 4:
                     rootView = inflater.inflate(R.layout.fragment_home, container, false);
