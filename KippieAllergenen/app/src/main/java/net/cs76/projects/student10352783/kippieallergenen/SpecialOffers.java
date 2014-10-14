@@ -15,6 +15,7 @@ import android.widget.ViewSwitcher;
 
 /**
  * Created by julianruger on 12-10-14.
+ * This class is used to display the special offers as a slideshow.
  */
 public class SpecialOffers {
 
@@ -32,33 +33,27 @@ public class SpecialOffers {
             @Override
             public View makeView() {
                 ImageView view = new ImageView(activity);
-                //view.setScaleType(ImageView.ScaleType.FIT_CENTER);
-                //view.setLayoutParams(new ImageSwitcher.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-
                 return view;
             }
         });
         imageSwitcher.setImageResource(R.drawable.ic_launcher);
 
-
+        /* Previous image*/
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Animation in = AnimationUtils.loadAnimation(activity, android.R.anim.fade_out);
-//                Animation out = AnimationUtils.loadAnimation(activity, android.R.anim.fade_out);
-//                imageSwitcher.setInAnimation(in);
                 imageSwitcher.setInAnimation(in);
                 imageSwitcher.setImageResource(R.drawable.ic_launcher);
             }
         });
 
+        /* next image*/
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Animation in = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in);
-                //Animation out = AnimationUtils.loadAnimation(activity, android.R.anim.slide_out_right);
                 imageSwitcher.setInAnimation(in);
-                //imageSwitcher.setOutAnimation(out);
                 imageSwitcher.setImageResource(R.drawable.ic_launcher);
             }
         });

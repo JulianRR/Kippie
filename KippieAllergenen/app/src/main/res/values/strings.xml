@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">KippieAllergenen</string>
-    <string name="title_section0">Home</string>
+    <string name="title_section0">Kippie Huizen</string>
     <string name="title_section1">Allergenen</string>
     <string name="title_section2">Aanbiedingen</string>
     <string name="title_section3">Pan Bestellen</string>

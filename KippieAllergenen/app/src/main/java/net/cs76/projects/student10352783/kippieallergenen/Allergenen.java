@@ -28,9 +28,12 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by julianruger on 12-10-14.
+ * This class is used to set the view for list of products with all the
+ * functionalities.
  */
 public class Allergenen {
 
@@ -41,30 +44,18 @@ public class Allergenen {
     private View popupView;
 
     String price;
-    String allergenen[];
-
-    //ParseQuery<ParseObject> query;
 
 
-    public void setView(View rootView, Activity activity, final LayoutInflater inflater, ArrayList<String> productNames) {
+    public void setView(View rootView, Activity activity, final LayoutInflater inflater, ArrayList<String> productNames, final Map<String, String> priceList) {
 
         adapter = new ArrayAdapter<String>(activity, R.layout.list_item, R.id.product_name, productNames);
-
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("Products");
-//        query.findInBackground(new FindCallback<ParseObject>() {
-//            public void done(List<ParseObject> commentList, ParseException e) {
-//                for (ParseObject comment : commentList) {
-//                    Object productName = comment.get("ProductName");
-//                    adapter.add((String) productName);
-//                }
-//            }
-//        });
 
         listView = (ListView) rootView.findViewById(R.id.list_view);
         search = (EditText) rootView.findViewById(R.id.inputSearch);
 
         listView.setAdapter(adapter);
 
+        /* set filter for the searchbar */
         search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -82,6 +73,7 @@ public class Allergenen {
             }
         });
 
+        /* Open popup window with informaiton about the chosen product. */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -110,7 +102,7 @@ public class Allergenen {
                 pName.setText(name);
 
                 TextView pPrice = (TextView) popupView.findViewById(R.id.prijsValue);
-                pPrice.setText(price);
+                pPrice.setText(priceList.get(name));
 
                 Button close = (Button) popupView.findViewById(R.id.close);
 

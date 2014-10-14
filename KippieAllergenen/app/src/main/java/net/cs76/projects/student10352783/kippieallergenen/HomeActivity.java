@@ -27,6 +27,8 @@ import com.parse.ParseAnalytics;
 import com.parse.ParseObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class HomeActivity extends Activity
@@ -140,7 +142,10 @@ public class HomeActivity extends Activity
         ArrayAdapter<String> adapter;
         Allergenen allergenenView;
         SpecialOffers specialOffers;
+        Order order;
         Queries queries;
+
+        Map<String, String> priceList = new HashMap<String, String>();
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -164,19 +169,18 @@ public class HomeActivity extends Activity
 
             queries = Queries.getInstance();
             ArrayList<String> productNames = queries.getProductNames();
+            priceList = queries.getPriceList();
+
 
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
+            /* Change fragment content according to the chosen item. */
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
                 case 2:
 
                     allergenenView = new Allergenen();
-
-
-
-
                     rootView = inflater.inflate(R.layout.fragment_allergenen, container, false);
-                    allergenenView.setView(rootView, getActivity(), inflater, productNames);
+                    allergenenView.setView(rootView, getActivity(), inflater, productNames, priceList);
                     break;
                 case 3:
                     specialOffers = new SpecialOffers();
@@ -186,7 +190,10 @@ public class HomeActivity extends Activity
                     specialOffers.setView(rootView, getActivity(), inflater);
                     break;
                 case 4:
-                    rootView = inflater.inflate(R.layout.fragment_home, container, false);
+                    order = new Order();
+
+                    rootView = inflater.inflate(R.layout.fragment_bestellen, container, false);
+                    order.setView(rootView, getActivity(), inflater);
                     break;
             }
             return rootView;

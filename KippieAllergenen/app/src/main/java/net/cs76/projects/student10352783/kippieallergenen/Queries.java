@@ -8,7 +8,9 @@ import com.parse.ParseQuery;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by julianruger on 12-10-14.
@@ -18,6 +20,8 @@ public class Queries {
     private static Queries instance;
 
     private ArrayList<String> productNamesList;
+    private Map<String, String[]> allergenenList = new HashMap<String, String[]>();
+    private Map<String, String> priceList = new HashMap<String, String>();
 
     public void setProductNames() {
         productNamesList = new ArrayList<String>();
@@ -27,7 +31,9 @@ public class Queries {
             public void done(List<ParseObject> commentList, ParseException e) {
                 for (ParseObject comment : commentList) {
                     Object productName = comment.get("ProductName");
+                    Object productPrice = comment.get("PriceEach");
                     productNamesList.add((String) productName);
+                    priceList.put((String) productName, (String) productPrice);
                 }
             }
         });
@@ -40,6 +46,8 @@ public class Queries {
     public ArrayList<String> getProductNames() {
         return this.productNamesList;
     }
+
+    public Map<String, String> getPriceList() { return this.priceList; }
 
     public static synchronized Queries getInstance() {
         if(instance == null) {
