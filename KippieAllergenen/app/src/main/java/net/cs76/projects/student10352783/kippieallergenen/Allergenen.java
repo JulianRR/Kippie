@@ -46,7 +46,9 @@ public class Allergenen {
     String price;
 
 
-    public void setView(View rootView, Activity activity, final LayoutInflater inflater, ArrayList<String> productNames, final Map<String, String> priceList) {
+    public void setView(View rootView, Activity activity, final LayoutInflater inflater,
+                        ArrayList<String> productNames, final Map<String, String> priceList,
+                        final Map<String, List<String>> allergenenList) {
 
         adapter = new ArrayAdapter<String>(activity, R.layout.list_item, R.id.product_name, productNames);
 
@@ -103,6 +105,9 @@ public class Allergenen {
 
                 TextView pPrice = (TextView) popupView.findViewById(R.id.prijsValue);
                 pPrice.setText(priceList.get(name));
+
+                TextView pAllergens = (TextView) popupView.findViewById(R.id.allergenenInfo);
+                pAllergens.setText(allergenenList.get(name).toString());
 
                 Button close = (Button) popupView.findViewById(R.id.close);
 

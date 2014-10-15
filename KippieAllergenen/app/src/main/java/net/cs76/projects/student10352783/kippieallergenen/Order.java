@@ -180,7 +180,7 @@ public class Order {
     public void sendOrder(Activity activity) {
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setType("message/rfc822");
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"julianruger@gmail.com"});
+        emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"julianruger94@gmail.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "test subject");
         emailIntent.putExtra(Intent.EXTRA_TEXT, pan + " x" + snackpanGroot.get("aantal").toString());
         try {

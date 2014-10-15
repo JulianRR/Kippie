@@ -28,6 +28,7 @@ import com.parse.ParseObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -146,6 +147,7 @@ public class HomeActivity extends Activity
         Queries queries;
 
         Map<String, String> priceList = new HashMap<String, String>();
+        Map<String, List<String>> allergenenList = new HashMap<String, List<String>>();
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -170,6 +172,7 @@ public class HomeActivity extends Activity
             queries = Queries.getInstance();
             ArrayList<String> productNames = queries.getProductNames();
             priceList = queries.getPriceList();
+            allergenenList = queries.getAllergenenList();
 
 
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
@@ -180,7 +183,7 @@ public class HomeActivity extends Activity
 
                     allergenenView = new Allergenen();
                     rootView = inflater.inflate(R.layout.fragment_allergenen, container, false);
-                    allergenenView.setView(rootView, getActivity(), inflater, productNames, priceList);
+                    allergenenView.setView(rootView, getActivity(), inflater, productNames, priceList, allergenenList);
                     break;
                 case 3:
                     specialOffers = new SpecialOffers();
