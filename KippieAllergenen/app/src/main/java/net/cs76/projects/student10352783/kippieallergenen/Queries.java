@@ -17,6 +17,8 @@ import java.util.Map;
 
 /**
  * Created by julianruger on 12-10-14.
+ *
+ * This class is used to get all the information from the database with parse queries.
  */
 public class Queries {
 
@@ -26,7 +28,8 @@ public class Queries {
     private Map<String, List<String>> allergenenList = new HashMap<String, List<String>>();
     private Map<String, String> priceList = new HashMap<String, String>();
 
-    public void setProductNames() {
+    /* called at the beggining of the app, to set all the information */
+    public void setData() {
         productNamesList = new ArrayList<String>();
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Products");
@@ -38,8 +41,7 @@ public class Queries {
                     Object productPrice = comment.get("PriceEach");
                     productNamesList.add((String) productName);
                     priceList.put((String) productName, (String) productPrice);
-                    List<Object> list = new ArrayList<Object>();
-                    list = comment.getList("Allergenen");
+                    List<Object> list = comment.getList("Allergenen");
 
                     for (Object i : list) {
                         allergenen.add((String) i);
@@ -51,6 +53,7 @@ public class Queries {
             }
         });
 
+        /* Sort the array alphabetically, DOES NOT WORK!*/
         IgnoreCompareComparator icc =new IgnoreCompareComparator();
         Collections.sort(productNamesList, icc);
 

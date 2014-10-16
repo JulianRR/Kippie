@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -22,6 +23,9 @@ import java.util.Map;
 
 /**
  * Created by julianruger on 14-10-14.
+ *
+ * This class is used for to order some of the special products. The order
+ * will be send by mail.
  */
 public class Order {
 
@@ -37,6 +41,7 @@ public class Order {
 
     private Spinner spinnerChoosePan, spinnerKeuze, spinnerAantal;
     private TableLayout table, table2;
+    private EditText editName, editPhone, editDate;
     private Button send;
     private String pan;
 
@@ -51,6 +56,11 @@ public class Order {
         table = (TableLayout) rootView.findViewById(R.id.table1);
         table2 = (TableLayout) rootView.findViewById(R.id.table3);
         send = (Button) rootView.findViewById(R.id.send);
+        editName = (EditText) rootView.findViewById(R.id.naam);
+        editPhone = (EditText) rootView.findViewById(R.id.telefoon);
+        editDate = (EditText) rootView.findViewById(R.id.datumAfhalen);
+
+
 
         /* array adapters for the spinners.*/
         ArrayAdapter<String> adapter_pan =
@@ -83,7 +93,6 @@ public class Order {
                 } else {
                     table.getChildAt(0).setVisibility(View.VISIBLE);
                 }
-                Toast.makeText(activity, "test", Toast.LENGTH_LONG).show();
 
             }
 
@@ -146,7 +155,17 @@ public class Order {
         send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendOrder(activity);
+                name = editName.getText().toString();
+                phone = editPhone.getText().toString();
+                date = editDate.getText().toString();
+                Log.d("info", "name: " + name + "phone: " + phone + "date: " + date);
+                if (name.equals("") || phone.equals("") || date.equals("")) {
+                    Toast.makeText(activity, "Some information is missing", Toast.LENGTH_LONG);
+                } else {
+                    sendOrder(activity);
+
+                }
+
             }
         });
 

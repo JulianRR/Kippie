@@ -53,8 +53,6 @@ public class HomeActivity extends Activity
         setContentView(R.layout.activity_home);
         Parse.initialize(this, "uBVqiimzahlF9p5DZZIQqB4Xd6gZUapSG0rRbgNv", "15fS3MKOedQnwG2h98WqWsCpnk1DZAiiEs5VscES");
 
-        queries = Queries.getInstance();
-        queries.setProductNames();
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -64,6 +62,11 @@ public class HomeActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
+        /* retrieve all the necessary variables from the database */
+        queries = Queries.getInstance();
+        queries.setData();
+
 
 
     }
