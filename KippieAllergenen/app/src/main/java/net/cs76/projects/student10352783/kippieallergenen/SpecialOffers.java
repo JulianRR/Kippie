@@ -14,8 +14,13 @@ import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
 /**
- * Created by julianruger on 12-10-14.
+ * SpecialOffers.java
+ *
  * This class is used to display the special offers as a slideshow.
+ *
+ * Name: Julian Ruger
+ * Student ID: 10352783
+ * E-mail: julian.ruger@student.uva.nl
  */
 public class SpecialOffers {
 

@@ -31,7 +31,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+/**
+ * HomeActivity.java
+ *
+ * This activity contains the layout of the whole app, the navigation drawer and the fragments.
+ * The default navigation drawer activity from android studio is used here.
+ *
+ * Name: Julian Ruger
+ * Student ID: 10352783
+ * E-mail: julian.ruger@student.uva.nl
+ */
 public class HomeActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
@@ -58,7 +67,7 @@ public class HomeActivity extends Activity
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
 
-        // Set up the drawer.
+        /* Set up the drawer. */
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
@@ -140,17 +149,17 @@ public class HomeActivity extends Activity
          */
         private static final String ARG_SECTION_NUMBER = "section_number";
 
-        /* Variables for Allergenen*/
-        private ListView listView;
-        EditText search;
-        ArrayAdapter<String> adapter;
-        Allergenen allergenenView;
+        /* Variables for the fragments */
+        Allergenen allergensView;
         SpecialOffers specialOffers;
         Order order;
         Queries queries;
 
+        /* The prices of the products and the allergens from the database will be stored
+         * in these HashMaps.
+         */
         Map<String, String> priceList = new HashMap<String, String>();
-        Map<String, List<String>> allergenenList = new HashMap<String, List<String>>();
+        Map<String, List<String>> allergensList = new HashMap<String, List<String>>();
 
         /**
          * Returns a new instance of this fragment for the given section
@@ -173,21 +182,26 @@ public class HomeActivity extends Activity
                 Bundle savedInstanceState) {
 
             queries = Queries.getInstance();
-            ArrayList<String> productNames = queries.getProductNames();
+
+            ArrayList<String> productsList = queries.getProductNames();
             priceList = queries.getPriceList();
-            allergenenList = queries.getAllergenenList();
+            allergensList = queries.getAllergensList();
 
 
             View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
             /* Change fragment content according to the chosen item. */
             switch (getArguments().getInt(ARG_SECTION_NUMBER)) {
+
+                /* "Allergenen" fragment*/
                 case 2:
 
-                    allergenenView = new Allergenen();
+                    allergensView = new Allergenen();
                     rootView = inflater.inflate(R.layout.fragment_allergenen, container, false);
-                    allergenenView.setView(rootView, getActivity(), inflater, productNames, priceList, allergenenList);
+                    allergensView.setView(rootView, getActivity(), inflater, productsList, priceList, allergensList);
                     break;
+
+                /* "Aanbiedingen" fragment*/
                 case 3:
                     specialOffers = new SpecialOffers();
 
@@ -195,6 +209,8 @@ public class HomeActivity extends Activity
                     rootView = inflater.inflate(R.layout.fragment_aanbiedingen, container, false);
                     specialOffers.setView(rootView, getActivity(), inflater);
                     break;
+
+                /* "Bestellen" fragment*/
                 case 4:
                     order = new Order();
 

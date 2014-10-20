@@ -20,19 +20,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Product:"
-        android:layout_centerVertical="true"
+        android:layout_marginLeft="20dp"
+        android:layout_alignTop="@+id/allergenen"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="41dp" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Text"
+        android:layout_marginLeft="26dp"
         android:layout_alignTop="@+id/product"
-        android:layout_toRightOf="@+id/product"
-        android:layout_marginLeft="5dp"/>
+        android:layout_toRightOf="@+id/prijs"
+        android:layout_toEndOf="@+id/prijs" />
 
     <Button
         android:id="@+id/close"
@@ -48,9 +49,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Allergenen"
+        android:layout_toEndOf="@+id/close"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/close"
-        android:layout_toEndOf="@+id/close" />
+        android:layout_toRightOf="@+id/close" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +67,7 @@
         android:layout_height="wrap_content"
         android:text="Prijs:"
         android:id="@+id/prijs"
-        android:layout_alignTop="@+id/allergenenInfo"
+        android:layout_below="@+id/allergenenInfo"
         android:layout_alignLeft="@+id/product"
         android:layout_alignStart="@+id/product" />
 

@@ -31,9 +31,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by julianruger on 12-10-14.
- * This class is used to set the view for list of products with all the
- * functionalities.
+ * Allergenen.java
+ *
+ * This class is used to set the view for list of products with all the corresponding information.
+ *
+ * Name: Julian Ruger
+ * Student ID: 10352783
+ * E-mail: julian.ruger@student.uva.nl
  */
 public class Allergenen {
 
@@ -45,10 +49,10 @@ public class Allergenen {
 
     String price;
 
-
+    /* This method sets the view for the "Allergenen" fragment */
     public void setView(View rootView, Activity activity, final LayoutInflater inflater,
                         ArrayList<String> productNames, final Map<String, String> priceList,
-                        final Map<String, List<String>> allergenenList) {
+                        final Map<String, List<String>> allergensList) {
 
         adapter = new ArrayAdapter<String>(activity, R.layout.list_item, R.id.product_name, productNames);
 
@@ -75,30 +79,19 @@ public class Allergenen {
             }
         });
 
-        /* Open popup window with informaiton about the chosen product. */
+        /* Open popup window with information about the chosen product. */
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Object obj = listView.getAdapter().getItem(i);
                 String name = obj.toString();
-                Log.d("item", name);
 
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Products");
-                query.whereEqualTo("ProductName", name);
-                query.getFirstInBackground(new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject parseObject, ParseException e) {
-                        if (parseObject.get("PriceEach") == null) {
-                            price = "";
-                        } else {
-                            price = parseObject.get("PriceEach").toString();
-                        }
-                    }
-                });
-
+                /* Create and show the popup window. */
                 popupView = inflater.inflate(R.layout.popup_product, null);
                 popupWindow = new PopupWindow(popupView, -1, -1, true);
                 popupWindow.showAtLocation(popupView, Gravity.CENTER, 0, 0);
+
+                /* Set the information about the products. */
 
                 TextView pName = (TextView) popupView.findViewById(R.id.name);
                 pName.setText(name);
@@ -107,7 +100,7 @@ public class Allergenen {
                 pPrice.setText(priceList.get(name));
 
                 TextView pAllergens = (TextView) popupView.findViewById(R.id.allergenenInfo);
-                pAllergens.setText(allergenenList.get(name).toString());
+                pAllergens.setText(allergensList.get(name).toString());
 
                 Button close = (Button) popupView.findViewById(R.id.close);
 
