@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,7 +31,7 @@ public class Order {
 
     private String[] keuze = {"Bami", "Nasi", "Mihoen", "Chinese Bami"};
     private String[] aantal =  {"0", "1", "2"};
-    private String[] pannen = {"Snackpan Groot (90 hapjes) €29,59", "Snackapan Klein (60 hapjes) €19,95",
+    private String[] pannen = {"Snackpan Groot (90 hapjes) €29,95", "Snackapan Klein (60 hapjes) €19,95",
                                "Maaltijdpan Groot (2400 gr) €29,95", "Maaltijdpan Klein (1600 gr) €19,95"};
 
     Map<String, String> snackpanGroot = new HashMap<String, String>();
@@ -50,7 +49,7 @@ public class Order {
 
 
 
-    public void setView(View rootView, final Activity activity, final LayoutInflater inflater) {
+    public void setView(final View rootView, final Activity activity, final LayoutInflater inflater) {
         spinnerChoosePan = (Spinner) rootView.findViewById(R.id.choosePan);
         spinnerKeuze = (Spinner) rootView.findViewById(R.id.keuzeuit);
         spinnerAantal = (Spinner) rootView.findViewById(R.id.aantal);
@@ -138,16 +137,16 @@ public class Order {
                 /* Add the chosen "aantal" to the right map. */
                 if (pan.equals(pannen[0])) {
                     snackpanGroot.put("aantal", spinnerAantal.getSelectedItem().toString());
-                    addRow(pan, snackpanGroot, table2, activity);
+                    setVisibility(pan, snackpanGroot, (TextView) rootView.findViewById(R.id.pan1));
                 } else if (pan.equals(pannen[1])) {
                     snackpanKlein.put("aantal", spinnerAantal.getSelectedItem().toString());
-                    addRow(pan, snackpanKlein, table2, activity);
+                    setVisibility(pan, snackpanKlein, (TextView) rootView.findViewById(R.id.pan2));
                 } else if (pan.equals(pannen[2])) {
                     maaltijdpanGroot.put("aantal", spinnerAantal.getSelectedItem().toString());
-                    addRow(pan, maaltijdpanGroot, table2, activity);
+                    setVisibility(pan, maaltijdpanGroot, (TextView) rootView.findViewById(R.id.pan3));
                 } else {
                     maaltijdpanKlein.put("aantal", spinnerAantal.getSelectedItem().toString());
-                    addRow(pan, maaltijdpanKlein, table2, activity);
+                    setVisibility(pan, maaltijdpanKlein, (TextView) rootView.findViewById(R.id.pan4));
                 }
 
             }
@@ -184,33 +183,27 @@ public class Order {
 
     }
 
-    /* Adds a row to the view to see what the users orders */
-    public void addRow(String p, Map<String, String> map, TableLayout table, Activity activity) {
-        TableRow row = new TableRow(activity);
-        TableRow.LayoutParams lp = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT);
-        row.setLayoutParams(lp);
-        TextView pan = new TextView(activity);
-        TextView keuze = new TextView(activity);
-        TextView aantal = new TextView(activity);
-        pan.setText(p);
+    /* Set the textview of the corresponding "pan", so the user can see what he/she orders. */
+    public void setVisibility(String p, Map<String, String> map, TextView textView) {
+        StringBuilder text = new StringBuilder("");
+        text.append(p);
+
+        /* Set the text */
         if (p.equals(pannen[2]) || p.equals(pannen[3])) {
-            keuze.setText(map.get("keuze"));
-        } else {
-            keuze.setText("");
-        }
-        if (map.get("aantal").equals("0")) {
+            text.append(" " + map.get("keuze"));
+        } if (!map.get("aantal").equals("0")) {
+            text.append(" x" + map.get("aantal"));
+            textView.setText(text);
+            textView.setVisibility(View.VISIBLE);
             return;
-        } else {
-            aantal.setText("x" + map.get("aantal"));
         }
 
+        textView.setVisibility(View.INVISIBLE);
+        return;
 
-        row.addView(pan);
-        row.addView(keuze);
-        row.addView(aantal);
-        table.addView(row);
 
     }
+
 
     /* starts email intent to send the order */
     public void sendOrder(Activity activity) {
@@ -220,7 +213,7 @@ public class Order {
         emailIntent.putExtra(Intent.EXTRA_EMAIL, new String[]{"julianruger94@gmail.com"});
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Pan bestellen");
         Log.d("pan", snackpanGroot.get("aantal"));
-        /* Check which "pan" is selected and add the inforamtion to the E-mail. */
+        /* Check which "pan" is selected and add the information to the E-mail. */
         if (!snackpanGroot.get("aantal").equals("0")) {
             text.append(pannen[0] + " x" + snackpanGroot.get("aantal") + "\n");
 

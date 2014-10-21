@@ -78,10 +78,55 @@
         </TableLayout>
 
         <TableLayout
-            android:id="@+id/table2"
+            android:id="@+id/table4"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/table3">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/pan1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pan1"
+                    android:visibility="invisible"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/pan2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pan2"
+                    android:visibility="invisible"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/pan3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pan3"
+                    android:visibility="invisible"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/pan4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pan4"
+                    android:visibility="invisible"/>
+            </TableRow>
+
+
+        </TableLayout>
+
+        <TableLayout
+            android:id="@+id/table2"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/table4">
 
 
             <TableRow>
