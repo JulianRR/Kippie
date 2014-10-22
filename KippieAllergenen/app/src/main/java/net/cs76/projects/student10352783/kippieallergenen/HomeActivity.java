@@ -62,7 +62,6 @@ public class HomeActivity extends Activity
         setContentView(R.layout.activity_home);
         Parse.initialize(this, "uBVqiimzahlF9p5DZZIQqB4Xd6gZUapSG0rRbgNv", "15fS3MKOedQnwG2h98WqWsCpnk1DZAiiEs5VscES");
 
-
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
         mTitle = getTitle();
@@ -195,8 +194,8 @@ public class HomeActivity extends Activity
 
                 /* "Allergenen" fragment*/
                 case 2:
-
                     allergensView = new Allergenen();
+
                     rootView = inflater.inflate(R.layout.fragment_allergenen, container, false);
                     allergensView.setView(rootView, getActivity(), inflater, productsList, priceList, allergensList);
                     break;
@@ -204,7 +203,6 @@ public class HomeActivity extends Activity
                 /* "Aanbiedingen" fragment*/
                 case 3:
                     specialOffers = new SpecialOffers();
-
 
                     rootView = inflater.inflate(R.layout.fragment_aanbiedingen, container, false);
                     specialOffers.setView(rootView, getActivity(), inflater);

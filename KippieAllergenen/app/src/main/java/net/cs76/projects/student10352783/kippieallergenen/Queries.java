@@ -1,15 +1,11 @@
 package net.cs76.projects.student10352783.kippieallergenen;
 
-import android.util.Log;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,11 +53,6 @@ public class Queries {
             }
         });
 
-        /* Sort the array alphabetically, DOES NOT WORK!*/
-        IgnoreCompareComparator icc = new IgnoreCompareComparator();
-        Collections.sort(productNamesList, icc);
-        Log.d("array", productNamesList.toString());
-
     }
 
     public ArrayList<String> getProductNames() {
@@ -80,10 +71,5 @@ public class Queries {
         return instance;
     }
 
-    class IgnoreCompareComparator implements Comparator<String> {
-        public int compare(String strA, String strB) {
-            return strA.compareToIgnoreCase(strB);
-        }
-    }
 
 }

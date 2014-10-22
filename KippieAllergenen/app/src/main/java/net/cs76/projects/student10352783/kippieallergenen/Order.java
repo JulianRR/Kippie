@@ -201,7 +201,6 @@ public class Order {
         textView.setVisibility(View.INVISIBLE);
         return;
 
-
     }
 
 

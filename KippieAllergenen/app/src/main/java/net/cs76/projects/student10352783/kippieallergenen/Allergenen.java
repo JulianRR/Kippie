@@ -3,7 +3,6 @@ package net.cs76.projects.student10352783.kippieallergenen;
 import android.app.Activity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,19 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -103,7 +90,6 @@ public class Allergenen {
                 pAllergens.setText(allergensList.get(name).toString());
 
                 Button close = (Button) popupView.findViewById(R.id.close);
-
 
                 close.setOnClickListener(new View.OnClickListener() {
                     @Override
