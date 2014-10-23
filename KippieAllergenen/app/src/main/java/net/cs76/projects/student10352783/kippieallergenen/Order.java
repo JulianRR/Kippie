@@ -40,7 +40,7 @@ public class Order {
     Map<String, String> maaltijdpanKlein = new HashMap<String, String>();
 
     private Spinner spinnerChoosePan, spinnerKeuze, spinnerAantal;
-    private TableLayout table, table2;
+    private TableLayout table;
     private EditText editName, editPhone, editDate;
     private Button send;
     private String pan;
@@ -54,7 +54,6 @@ public class Order {
         spinnerKeuze = (Spinner) rootView.findViewById(R.id.keuzeuit);
         spinnerAantal = (Spinner) rootView.findViewById(R.id.aantal);
         table = (TableLayout) rootView.findViewById(R.id.table1);
-        table2 = (TableLayout) rootView.findViewById(R.id.table3);
         send = (Button) rootView.findViewById(R.id.send);
         editName = (EditText) rootView.findViewById(R.id.naam);
         editPhone = (EditText) rootView.findViewById(R.id.telefoon);

@@ -2,6 +2,7 @@ package net.cs76.projects.student10352783.kippieallergenen;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageSwitcher;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher;
+
+import java.util.ArrayList;
 
 /**
  * SpecialOffers.java
@@ -27,6 +30,9 @@ public class SpecialOffers {
     private ImageSwitcher imageSwitcher;
     private Button previous, next;
 
+    private int[] images = {R.drawable.ic_launcher, R.drawable.android_icon, R.drawable.android_vector};
+    int current = 0;
+
     public void setView(View rootView, final Activity activity, final LayoutInflater inflater) {
 
         imageSwitcher = (ImageSwitcher) rootView.findViewById(R.id.imageSwitcher);
@@ -41,25 +47,37 @@ public class SpecialOffers {
                 return view;
             }
         });
-        imageSwitcher.setImageResource(R.drawable.ic_launcher);
+        imageSwitcher.setImageResource(images[0]);
+
 
         /* Previous image*/
         previous.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Animation in = AnimationUtils.loadAnimation(activity, android.R.anim.fade_out);
+                Animation in = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in);
                 imageSwitcher.setInAnimation(in);
-                imageSwitcher.setImageResource(R.drawable.ic_launcher);
+                /* Set index of array to the previous index, if index is 0 go to last item in
+                 * the array.
+                 */
+                if (current == 0) {
+                    current = images.length - 1;
+                } else {
+                    current = (current - 1) % images.length;
+                }
+
+                imageSwitcher.setImageResource(images[current]);
             }
         });
 
-        /* next image*/
+        /* Next image*/
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Animation in = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in);
                 imageSwitcher.setInAnimation(in);
-                imageSwitcher.setImageResource(R.drawable.ic_launcher);
+                /* Set index to next index in array. */
+                current = (current + 1) % images.length;
+                imageSwitcher.setImageResource(images[current]);
             }
         });
 

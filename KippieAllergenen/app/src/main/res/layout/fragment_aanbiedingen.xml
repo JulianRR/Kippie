@@ -22,7 +22,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="next"
+        android:text="volgende"
         android:id="@+id/next"
         android:layout_marginBottom="107dp"
         android:layout_marginRight="116dp"
@@ -34,7 +34,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="previous"
+        android:text="vorige"
         android:id="@+id/previous"
         android:layout_alignBottom="@+id/next"
         android:layout_toLeftOf="@+id/next" />
