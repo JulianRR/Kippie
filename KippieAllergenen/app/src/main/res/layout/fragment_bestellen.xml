@@ -15,12 +15,21 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
+        <TextView
+            android:id="@+id/voegtoe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Voeg een pan toe:"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"/>
+
         <Spinner
         android:id="@+id/choosePan"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="10dp"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_below="@+id/voegtoe"/>
 
         <!--Table for setting preferences for the "pan"-->
         <TableLayout
@@ -30,6 +39,7 @@
             android:layout_below="@+id/choosePan"
             android:visibility="invisible">
 
+            <!--nasi, bami, mihoen, chinese bami-->
             <TableRow
                 android:id="@+id/keuzeRow">
                 <TextView
@@ -48,6 +58,26 @@
 
             </TableRow>
 
+            <!--kip in saus-->
+            <TableRow
+                android:id="@+id/keuze2Row">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Keuze uit"
+                    android:textStyle="bold"/>
+
+                <Spinner
+                    android:id="@+id/keuze2uit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"/>
+
+
+
+            </TableRow>
+
+            <!--Aantal-->
             <TableRow
                 android:id="@+id/aantalRow">
                 <TextView
@@ -77,6 +107,15 @@
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/table1">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/gekozen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Gekozen pannen:"
+                    android:textStyle="bold"/>
+            </TableRow>
 
             <TableRow>
                 <TextView
@@ -111,6 +150,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Pan4"
+                    android:visibility="invisible"/>
+            </TableRow>
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/pan5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pan5"
                     android:visibility="invisible"/>
             </TableRow>
 

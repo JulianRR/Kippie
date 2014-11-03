@@ -2,6 +2,8 @@ package net.cs76.projects.student10352783.kippieallergenen;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,14 +30,21 @@ import java.util.ArrayList;
 public class SpecialOffers {
 
     private ImageSwitcher imageSwitcher;
+    private ImageView imageView;
     private Button previous, next;
+    private Bitmap bitmap;
+    Queries queries;
 
     private int[] images = {R.drawable.ic_launcher, R.drawable.android_icon, R.drawable.android_vector};
     int current = 0;
 
     public void setView(View rootView, final Activity activity, final LayoutInflater inflater) {
 
+        queries = Queries.getInstance();
+        bitmap = queries.getBitmap();
+
         imageSwitcher = (ImageSwitcher) rootView.findViewById(R.id.imageSwitcher);
+        imageView = (ImageView) rootView.findViewById(R.id.imageView);
         previous = (Button) rootView.findViewById(R.id.previous);
         next = (Button) rootView.findViewById(R.id.next);
 
@@ -48,6 +57,7 @@ public class SpecialOffers {
             }
         });
         imageSwitcher.setImageResource(images[0]);
+        imageView.setImageBitmap(bitmap);
 
 
         /* Previous image*/

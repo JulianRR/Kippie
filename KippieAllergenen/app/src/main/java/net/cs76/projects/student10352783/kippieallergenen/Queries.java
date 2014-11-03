@@ -1,7 +1,14 @@
 package net.cs76.projects.student10352783.kippieallergenen;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
+
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseException;
+import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -26,6 +33,8 @@ public class Queries {
     private ArrayList<String> productNamesList = new ArrayList<String>();
     private Map<String, List<String>> allergensList = new HashMap<String, List<String>>();
     private Map<String, String> priceList = new HashMap<String, String>();
+
+    private Bitmap bitmap;
 
     /* called at the beginning of the app, to set all the information */
     public void setData() {
@@ -53,6 +62,26 @@ public class Queries {
             }
         });
 
+        ParseQuery<ParseObject> query2 = ParseQuery.getQuery("SpecialOffers");
+        query2.getFirstInBackground(new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                if (parseObject != null) {
+                    ParseFile file = (ParseFile) parseObject.get("Poster");
+                    file.getDataInBackground(new GetDataCallback() {
+                        @Override
+                        public void done(byte[] bytes, ParseException e) {
+                            if (e == null) {
+                                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                                Log.d("bitmap", bitmap.toString());
+                            } else {
+
+                            }
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public ArrayList<String> getProductNames() {
@@ -63,6 +92,8 @@ public class Queries {
 
     public Map<String, List<String>> getAllergensList() { return this.allergensList; }
 
+    public Bitmap getBitmap() { return this.bitmap; }
+
     public static synchronized Queries getInstance() {
         if(instance == null) {
             instance = new Queries();
@@ -70,6 +101,7 @@ public class Queries {
 
         return instance;
     }
+
 
 
 }

@@ -30,16 +30,19 @@ import java.util.Map;
 public class Order {
 
     private String[] keuze = {"Bami", "Nasi", "Mihoen", "Chinese Bami"};
+    private String[] keuze2 = {"kip1", "kip2", "kip3", "kip4"};
     private String[] aantal =  {"0", "1", "2"};
     private String[] pannen = {"Snackpan Groot (90 hapjes) €29,95", "Snackapan Klein (60 hapjes) €19,95",
-                               "Maaltijdpan Groot (2400 gr) €29,95", "Maaltijdpan Klein (1600 gr) €19,95"};
+                               "Maaltijdpan Groot (2400 gr) €29,95", "Maaltijdpan Klein (1600 gr) €19,95",
+                               "Combi Maaltijdpan (2200 gr) €29,95"};
 
     Map<String, String> snackpanGroot = new HashMap<String, String>();
     Map<String, String> snackpanKlein = new HashMap<String, String>();
     Map<String, String> maaltijdpanGroot = new HashMap<String, String>();
     Map<String, String> maaltijdpanKlein = new HashMap<String, String>();
+    Map<String, String> combiMaaltijdpan = new HashMap<String, String>();
 
-    private Spinner spinnerChoosePan, spinnerKeuze, spinnerAantal;
+    private Spinner spinnerChoosePan, spinnerKeuze, spinnerKeuze2, spinnerAantal;
     private TableLayout table;
     private EditText editName, editPhone, editDate;
     private Button send;
@@ -52,6 +55,7 @@ public class Order {
     public void setView(final View rootView, final Activity activity, final LayoutInflater inflater) {
         spinnerChoosePan = (Spinner) rootView.findViewById(R.id.choosePan);
         spinnerKeuze = (Spinner) rootView.findViewById(R.id.keuzeuit);
+        spinnerKeuze2 = (Spinner) rootView.findViewById(R.id.keuze2uit);
         spinnerAantal = (Spinner) rootView.findViewById(R.id.aantal);
         table = (TableLayout) rootView.findViewById(R.id.table1);
         send = (Button) rootView.findViewById(R.id.send);
@@ -66,6 +70,9 @@ public class Order {
         maaltijdpanKlein.put("aantal", "0");
         maaltijdpanGroot.put("keuze", "Bami");
         maaltijdpanKlein.put("keuze", "Bami");
+        combiMaaltijdpan.put("aantal", "0");
+        combiMaaltijdpan.put("keuze", "Bami");
+        combiMaaltijdpan.put("keuze2", "kip1");
 
 
 
@@ -82,6 +89,12 @@ public class Order {
         adapter_keuze.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerKeuze.setAdapter(adapter_keuze);
 
+        ArrayAdapter<String> adapter_keuze2 =
+                new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, keuze2);
+
+        adapter_keuze2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerKeuze2.setAdapter(adapter_keuze2);
+
         ArrayAdapter<String> adapter_aantal =
                 new ArrayAdapter<String>(activity, android.R.layout.simple_spinner_item, aantal);
 
@@ -94,9 +107,15 @@ public class Order {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 spinnerChoosePan.setSelection(i);
                 table.setVisibility(View.VISIBLE);
+                spinnerKeuze.setSelection(0);
+                spinnerKeuze2.setSelection(0);
                 pan = (String) spinnerChoosePan.getSelectedItem();
                 if (pan.equals(pannen[0]) || pan.equals(pannen[1])) {
                     table.getChildAt(0).setVisibility(View.INVISIBLE);
+                    table.getChildAt(1).setVisibility(View.INVISIBLE);
+                } else if (pan.equals(pannen[4])){
+                    table.getChildAt(0).setVisibility(View.VISIBLE);
+                    table.getChildAt(1).setVisibility(View.VISIBLE);
                 } else {
                     table.getChildAt(0).setVisibility(View.VISIBLE);
                 }
@@ -117,9 +136,25 @@ public class Order {
                 /* Add the chosen "keuze" to the right map.*/
                 if (pan.equals(pannen[2])) {
                     maaltijdpanGroot.put("keuze", spinnerKeuze.getSelectedItem().toString());
-                } else {
+                } else if (pan.equals(pannen[3])){
                     maaltijdpanKlein.put("keuze", spinnerKeuze.getSelectedItem().toString());
+                } else if (pan.equals(pannen[4])) {
+                    combiMaaltijdpan.put("keuze", spinnerKeuze.getSelectedItem().toString());
                 }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
+
+        /* "Keuze 2"*/
+        spinnerKeuze2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                spinnerKeuze2.setSelection(i);
+                combiMaaltijdpan.put("keuze2", spinnerKeuze2.getSelectedItem().toString());
             }
 
             @Override
@@ -143,9 +178,12 @@ public class Order {
                 } else if (pan.equals(pannen[2])) {
                     maaltijdpanGroot.put("aantal", spinnerAantal.getSelectedItem().toString());
                     setVisibility(pan, maaltijdpanGroot, (TextView) rootView.findViewById(R.id.pan3));
-                } else {
+                } else if (pan.equals(pannen[3])){
                     maaltijdpanKlein.put("aantal", spinnerAantal.getSelectedItem().toString());
                     setVisibility(pan, maaltijdpanKlein, (TextView) rootView.findViewById(R.id.pan4));
+                } else if (pan.equals(pannen[4])) {
+                    combiMaaltijdpan.put("aantal", spinnerAantal.getSelectedItem().toString());
+                    setVisibility(pan, combiMaaltijdpan, (TextView) rootView.findViewById(R.id.pan5));
                 }
 
             }
@@ -169,7 +207,8 @@ public class Order {
                         (snackpanGroot.get("aantal").equals("0") &&
                          snackpanKlein.get("aantal").equals("0") &&
                          maaltijdpanGroot.get("aantal").equals("0") &&
-                         maaltijdpanKlein.get("aantal").equals("0"))) {
+                         maaltijdpanKlein.get("aantal").equals("0") &&
+                         combiMaaltijdpan.get("aatnal").equals("0"))) {
                     Toast.makeText(activity, "U heeft niet alle velden ingevuld.", Toast.LENGTH_LONG).show();
                 } else {
                     sendOrder(activity);
@@ -190,7 +229,11 @@ public class Order {
         /* Set the text */
         if (p.equals(pannen[2]) || p.equals(pannen[3])) {
             text.append(" " + map.get("keuze"));
-        } if (!map.get("aantal").equals("0")) {
+        }
+        if (p.equals(pannen[4])) {
+            text.append(" & " + map.get("keuze2"));
+        }
+        if (!map.get("aantal").equals("0")) {
             text.append(" x" + map.get("aantal"));
             textView.setText(text);
             textView.setVisibility(View.VISIBLE);
@@ -225,6 +268,9 @@ public class Order {
         } if (!maaltijdpanKlein.get("aantal").equals("0")) {
             text.append(pannen[3] + " " + maaltijdpanKlein.get("keuze") +
                     " x" + maaltijdpanKlein.get("aantal") + "\n");
+        } if (!combiMaaltijdpan.get("aantal").equals("0")) {
+            text.append(pannen[4] + " " + combiMaaltijdpan.get("keuze") + " & " +
+                    combiMaaltijdpan.get("keuze2") + " x" + combiMaaltijdpan.get("aantal") + "\n");
         }
         Log.d("text", text.toString());
         emailIntent.putExtra(Intent.EXTRA_TEXT, text.toString());
