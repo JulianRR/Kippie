@@ -3,6 +3,8 @@ package net.cs76.projects.student10352783.kippieallergenen;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,13 +37,15 @@ public class SpecialOffers {
     private Bitmap bitmap;
     Queries queries;
 
+    private ArrayList<Bitmap> posters;
+
     private int[] images = {R.drawable.ic_launcher, R.drawable.android_icon, R.drawable.android_vector};
     int current = 0;
 
     public void setView(View rootView, final Activity activity, final LayoutInflater inflater) {
 
         queries = Queries.getInstance();
-        bitmap = queries.getBitmap();
+        posters = queries.getBitmap();
 
         imageSwitcher = (ImageSwitcher) rootView.findViewById(R.id.imageSwitcher);
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
@@ -56,8 +60,9 @@ public class SpecialOffers {
                 return view;
             }
         });
-        imageSwitcher.setImageResource(images[0]);
-        imageView.setImageBitmap(bitmap);
+        Drawable drawable = new BitmapDrawable(activity.getResources(), posters.get(0));
+        imageSwitcher.setImageDrawable(drawable);
+        //imageView.setImageBitmap(bitmap);
 
 
         /* Previous image*/
@@ -70,12 +75,12 @@ public class SpecialOffers {
                  * the array.
                  */
                 if (current == 0) {
-                    current = images.length - 1;
+                    current = posters.size() - 1;
                 } else {
-                    current = (current - 1) % images.length;
+                    current = (current - 1) % posters.size();
                 }
 
-                imageSwitcher.setImageResource(images[current]);
+                imageSwitcher.setImageDrawable(new BitmapDrawable(activity.getResources(), posters.get(current)));
             }
         });
 
@@ -86,8 +91,8 @@ public class SpecialOffers {
                 Animation in = AnimationUtils.loadAnimation(activity, android.R.anim.fade_in);
                 imageSwitcher.setInAnimation(in);
                 /* Set index to next index in array. */
-                current = (current + 1) % images.length;
-                imageSwitcher.setImageResource(images[current]);
+                current = (current + 1) % posters.size();
+                imageSwitcher.setImageDrawable(new BitmapDrawable(activity.getResources(), posters.get(current)));
             }
         });
 
